@@ -1,9 +1,5 @@
 require("dotenv").config();
 
-// PASS IN DATA
-// NEED TO DO A COMMAND TO CALL THE FUNCTION
-
-
 const getData = (safeLow, standard, fast) => {
   // Discord.js Config
   const Discord = require("discord.js");
@@ -28,27 +24,18 @@ const getData = (safeLow, standard, fast) => {
       .addFields(
         { name: 'safe low', value: safeLow, inline: true },
         { name: 'standard', value: standard, inline: true },
-        { name: 'fast', value: fast, inline: true }      )
+        { name: 'fast', value: fast, inline: true })
       .setTimestamp()
       .setFooter('timestamp: ', image);
 
-   
     client.on('message', msg => {
       if (msg.content === '.gas') {
-        // "Line 1 \n Line 2"
         msg.channel.send(exampleEmbed);
       }
     });
     console.log(safeLow, standard, fast)
   }
-
-  // bot.on('message', msg => {
-  //   if (msg.content === 'ping') {
-  //     msg.reply('pong');
-  //     msg.channel.send('pong');
-  //   }
-  // });
-
+  
   // ** INVOKE DISCORD BOT **
   client.on("ready", () => {
     console.log("Discord bot is Online, please wait while fetching data");
