@@ -1,6 +1,10 @@
 require("dotenv").config();
+axios = require("axios");
+// const bot = require("./discordBot");
+const ethGasBot = require('./fetchData');
 
-const getData = (safeLow, standard, fast) => {
+// safeLow, standard, fast
+const getData = () => {
   // Discord.js Config
   const Discord = require("discord.js");
   const client = new Discord.Client();
@@ -19,21 +23,51 @@ const getData = (safeLow, standard, fast) => {
 
     const image = 'https://i.imgur.com/VCBmVEt.png';
 
-    const exampleEmbed = new Discord.MessageEmbed()
-      .setColor('#0099ff')
-      .addFields(
-        { name: 'safe low', value: safeLow, inline: true },
-        { name: 'standard', value: standard, inline: true },
-        { name: 'fast', value: fast, inline: true })
-      .setTimestamp()
-      .setFooter('timestamp: ', image);
-
     client.on('message', msg => {
       if (msg.content === '.gas') {
-        msg.channel.send(exampleEmbed);
+        
+
+        // we need to call a function to fetch data ...
+        // ethGasBot.getData();
+        // console.log(ethGasBot.getData());
+        // msg.channel.send(exampleEmbed);
+
+        // 1) FETCH THE DATA
+
+        // 2) DESTRUCTURE OUT THE `safeLow`, `standard`, `fast`
+
+        // 3) pass that data into discord's MessageEmbed
+
+        // 4) the values should be different every time someone calls the .gas cmd
+       
+          const endpoint = "https://www.etherchain.org/api/gasPriceOracle"
+          
+          let safeLow = '';
+
+          async function asyncCall(safeLow) {
+            const response = await axios.get(endpoint);
+            const data = await response.data;
+            console.log(data) // #=> Promise { <pending> }
+            safeLow = data.safeLow;
+            // safeLow.then()
+            // console.log(safeLow)
+            // return data.safeLow.then(testLow => { return testLow } )
+            return safeLow;
+            // const { safeLow, standard, fast } = data
+            //   testLow = safeLow;
+            //   // pass in data here
+            //   // bot.getData(safeLow, standard, fast);
+            //   console.log(testLow)
+            // return { testLow };
+          }
+      
+          asyncCall();
+          // console.log(asyncCall());
+        
+        msg.channel.send(`asfd ${safeLow}`);
       }
     });
-    console.log(safeLow, standard, fast)
+    // console.log(safeLow, standard, fast)
   }
   
   // ** INVOKE DISCORD BOT **
