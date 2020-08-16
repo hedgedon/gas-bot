@@ -1,19 +1,12 @@
 require("dotenv").config();
-// axios = require("axios");
-// const bot = require("./discordBot");
-const fetch = require("node-fetch");
-
 const request = require("./fetchGasData");
 
-// safeLow, standard, fast
 const startDiscordBot = () => {
   // Discord.js Config
   const Discord = require("discord.js");
   const client = new Discord.Client();
   const token = process.env.DISCORD_BOT_TOKEN;
   const serverId = process.env.DEV_SERVER_ID;
-
-  // const gas = require("./fetch-node");
 
   async function fetchIt() {
     const guild = client.guilds.cache.get(serverId);
@@ -35,8 +28,18 @@ const startDiscordBot = () => {
             `standard: ${standard}`,
             `fast: ${fast}`
           );
-          // need to re-structure with MessageEmbed
-          msg.channel.send(`${safeLow}, ${standard}, ${fast}`);
+          const exampleEmbed = new Discord.MessageEmbed()
+            .setColor("#0099ff")
+            .addFields(
+              // pass in gas data here
+              { name: "safe low", value: `${safeLow}`, inline: true },
+              { name: "standard", value: `${standard}`, inline: true },
+              { name: "fast", value: `${fast}`, inline: true }
+            )
+            .setTimestamp()
+            .setFooter("gas snapshot", image);
+
+          msg.channel.send(exampleEmbed);
         });
       }
     });
