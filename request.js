@@ -1,8 +1,3 @@
-// fetch GAS API query
-// pass the returned data from GAS API to discord bot
-
-// schedule cron job
-
 const timestamp = require("time-stamp");
 const cron = require("node-cron");
 const axios = require("axios");
@@ -32,10 +27,11 @@ const getData = () => {
     }
   };
 
-  cron.schedule("*/5 * * * * *", () => {
-    console.log("scheduler hereee");
-    // call fetchQuery function
-    // pass data from fetchQuery to our discordBotv2
+  cron.schedule("*/60 * * * * *", () => {
+    console.log("-------");
+    console.log(
+      timestamp.utc("[YYYY/MM/DD:mm:ss]") + "running a task every 60 sec"
+    );
     fetchQuery();
     discordBot.setBot(lowGwei, standardGwei, fastGwei);
   });
