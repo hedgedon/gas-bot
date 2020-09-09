@@ -1,3 +1,4 @@
-const bot = require("./discordBot");
+// const bot = require("./discordBot");
+const bot = require("./request");
 
-bot.startDiscordBot();
+bot.getData();
